@@ -3,7 +3,7 @@
 import { Keypair } from "@solana/web3.js";
 import { generateMnemonic, mnemonicToSeedSync } from "bip39";
 import { derivePath } from "ed25519-hd-key";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import nacl from "tweetnacl";
 import bs58 from "bs58";
 import { toast } from "sonner";
@@ -21,12 +21,12 @@ interface Wallet {
     mnemonics: string;
 }
 
-export default function CreateWallet() {
+function CreateWallet() {
     const [mnemonicsWords, setMnemonicsWords] = useState<string[]>(Array(12).fill(""));
     const [wallets, setWallets] = useState<Wallet[]>([]);
     const [showKeys, setShowKeys] = useState<{ [key: number]: boolean }>({});
-    const searchParams = useSearchParams();
     const [coinType, setCoinType] = useState<number | null>(null);
+    const searchParams = useSearchParams();
 
     useEffect(() => {
         const solana = searchParams.get('solana');
@@ -40,7 +40,7 @@ export default function CreateWallet() {
         else {
             setCoinType(501);
         }
-    }, []);
+    }, [searchParams]);
 
 
     const generateWallet = (mnemonics: string, accountNumber: number): Wallet | null => {
@@ -239,5 +239,14 @@ export default function CreateWallet() {
                 </div>
             </div>
         </div>
+    );
+}
+
+
+export default function WalletPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <CreateWallet />
+        </Suspense>
     );
 }

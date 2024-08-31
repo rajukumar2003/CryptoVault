@@ -23,12 +23,8 @@ export function GridBackgroundDemo() {
                     CRYPTO VAULT
                 </span>
                 <span className=" text-center text-2xl text-neutral-600 dark:text-neutral-300">
-                    The crypto wallet that'll take you places
-                    <div>
-                        Choose a blockchain to get started
-                    </div>
+                    Generate, Secure, and Manage Your Crypto Wallets. Choose a blockchain to get started.
                 </span>
-                
             </div>
 
             <div className="mt-auto w-full">
